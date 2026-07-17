@@ -27,6 +27,31 @@ I dropped physiologic and merged brain / scan. Then, I changed reward to reward 
 
 4th Commit
 
+I started by doing a very simple search to see if a couple subjective words are being used in these gathered papers. This is a preview of what should be done later and more extensively when examining subjective focus. I got back:
+- Explantory Gap: 0
+- Subjective: 18
+- Phenomenology: 10
+- Conscious: 5
+
+Then, I cleaned up the data from the filtered list of papers and put it into a dataframe. After doing so, I decided to visualize this data based on which articles come from which year. After all, my project depends upon proper historicity. To my dismay, I saw that the 65 papers were mostly incredibly recent. Here was the graph I saw:
+![Graph](m_1_1_weak_extraction.png)
+
+Because of this, I decided to revisit my Semantic Scholar scraping. I implemented a list of year periods so that I can gather back specific papers per specific era. This significantly increased the amount of time to scrape from around 2 minutes to around 30 minutes. Throughout these 30 minutes, Semantic Scholar was prone to crash. (This unfortunately happened to me once right as the scraping reached the very end of the 2020-2026 era). Therefore, I incorporated a try and except catch. Furthermore, I put in a while loop so that if a crash occurs, the program doesn't just skip to the next era. For this first attempt, it took around 50 minutes to complete and gathered 39,133 unique papers in the end.
+
+Unfortunately, after this first attempt, the filtering process found that 30,000 of these papers didn't have abstracts. This was a serious blunder. Out of the 9000 papers that were searched for both on topic and neuroscience terms, only 102 total papers met the criteria. Here was the resulting graph and the subjective terms preview:
+![Graph](m_1_1_weak_extraction_2.png)
+
+- Explantory Gap: 0
+- Subjective: 21
+- Phenomenology: 12
+- Conscious: 6
+
+This is certainly a major improvement. I have successfully achieved around 40 new papers and have broken into the 90s where most of this medical technology for studying musical frisson was first created. Therefore, it is no shock to see these results.
+
+That being said, I don't want to so quickly abandon those 30,000 papers which got dropped for missing abstracts. Therefore, I will look to incorporate a search to PubMed for the abstracts. This will be effective in two ways. Not only will I find the missing pieces, but I will effectively be filtering for medical and neurosciene related papers only. That way, I will avoid pulling purely historical, musical, psychological or philosophical papers.
+
+5th Commit
+
 ## [7/15/2026]
 
 Woke up and found I was still IP blocked

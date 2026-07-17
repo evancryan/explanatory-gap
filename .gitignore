@@ -216,4 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MY ADDITIONS
 .DS_Store
+*.csv
