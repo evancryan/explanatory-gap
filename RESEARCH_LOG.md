@@ -4,6 +4,33 @@
 
 I will use two forms of data extraction. The first method will be based on phenomenas that present the explanatory gap. I will search for certain key words and tags to find phenomenas. I do not at all want to choose manually between more subjective or objective essays. I just want to see what conversations are being had on the subject. This first method of extraction will be split in half: I will query for major phenomenas and minor phenomenas. The second method will be based on citations.
 
+## [7/17/2026]
+
+I woke up and the program was finished running. It said that 10909 abstracts were recovered after 4 hours.
+
+After running a separate filtering part, it kept 72 papers. Now, the total amount of filtered papers, after I extended the list, was 174.
+
+The way I added the rescued papers, as dictionaries with attributes, vs. the normal filtered papers showed a different. The list now contained dicts and lists. Therefore, the way I would have to get data would require some trys and excepts in order to access the data in two different ways without crashing.
+
+I ran the safely modified, simple subjective search and got back these:
+- Explantory Gap: 0 -> 0
+- Subjective: 21 -> 28
+- Phenomenology: 12 -> 23
+- Conscious: 6 -> 8
+
+I created a graph to showcase the yearly tracking of the 174 papers. I successfully mapped out a complete progress from the 80s to the 2020s. In the extraction right before this, I had only two papers from 96/97. Now, I have 20 papers from the 1980s alone. This is a major success and can be seen here:
+![Graph](m_1_1_good_extraction.png)
+
+However, I realized that in the four hours I let the program request abstracts from PubMed, I forgot to ask for the authors as well. So, I went to the section where I collected all the essential information before putting it in a dataframe. There, I added a couple fallbacks to search the massive list of papers missing abstracts for a list of authors based on the title.
+
+After this, I was still perplexed as to why so many papers were getting dropped. So, I decided to go back to my filtering terms just to experiment. I add "cogniti" and "explanatory gap" to the topic_terms list. For the first application of filtering (on the papers which had abstracts from Semantic Scholar) it kept 306 papers instead of the 100 previously. When I applied these new filters for the second half (the papers which had abstracts from Semantic Scholar) it kept 303 papers, a massive increase from the 60 previously. Interestingly, none of these new papers included the phrase "explanatory gap". Instead, the massive increase came from "congiti".
+- cogniti: 466
+- explanatory gap: 0
+
+I decided to remove the phrase "cogniti" as I felt it was far too broad and was polluting my highly precise neuroscience papers on musical frisson with more general music papers. The immediate jump was far too noticeable and risky.
+
+6th Commit
+
 ## [7/16/2026]
 
 I started with building the first method. I would specifically look into a major phenomena of the explanatory gap: musical frisson.
@@ -50,7 +77,29 @@ This is certainly a major improvement. I have successfully achieved around 40 ne
 
 That being said, I don't want to so quickly abandon those 30,000 papers which got dropped for missing abstracts. Therefore, I will look to incorporate a search to PubMed for the abstracts. This will be effective in two ways. Not only will I find the missing pieces, but I will effectively be filtering for medical and neurosciene related papers only. That way, I will avoid pulling purely historical, musical, psychological or philosophical papers.
 
+I added *.csv to gitignore
+
 5th Commit
+
+Installed pymed
+
+imported time to use time.sleep for this pymed exploration instead of asyncio
+
+With the function I built, searching 30000 papers using PubMed without an API key would take at least 4 hours minimum. Therefore, I'll apply for an API key in the meantime while I let it run.
+
+Got my API key from pubmed instantly
+
+Put key in env and got email input
+
+Created function for querying pubmed for the paper's abstract
+
+Created for loop to go through each paper in the list missing an abstract and if the abstract was recovered, take its attributes into a clean dict p and append it to the rescued list (resc_list).
+
+Let this loop run for 124 minutes and 3000 papers were recovered but then it froze.
+
+I had to write another script segment which would start where the previous one left off and keep collecting data until it finished.
+
+I started this segmenet and went to sleep.
 
 ## [7/15/2026]
 
