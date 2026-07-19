@@ -54,7 +54,17 @@ The machine would give out 4 scores and then I would subtract them from each oth
 - Q4: Objective & Micro
 
 Therefore, I built a loop to go through each paper and give it the two scores. Each paper's year and scores were added to a list and the list was put into a dataframe. Then, I displayed the results of scoring for all the papers in this graph:
+
 ![Graph](frisson_2_var_display.png)
+
+I also displayed the slices of this scatterplot per decade.
+
+![Graph](frisson_2_var_display_80s.png)
+![Graph](frisson_2_var_display_90s.png)
+![Graph](frisson_2_var_display_00s.png)
+![Graph](frisson_2_var_display_10s.png)
+![Graph](frisson_2_var_display_20s.png)
+
 
 Now, obviously this selection of 174 papers only on musical frisson is short-sighted compared to what I will do later in this project when expanding the search. However, these results represent a good demonstration of the pipeline I will conduct. I added this to the methodology at the top of this log.
 
@@ -62,6 +72,9 @@ The next thing I do will be to incorporate the third variable (confidence) and t
 
 7th Commit
 
+I accidentally left out the scatterplots I was talking about before my last commit that I already pushed. So, I decided to add them this time.
+
+8th Commit
 
 ## [7/17/2026]
 
