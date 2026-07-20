@@ -12,6 +12,55 @@ I will use two forms of data extraction. The first method will be based on pheno
 6. Now that the papers have abstracts, are on-topic, on-genre, and historically spread apart, I put each one into the Zero-Shot AI model for scoring based on three scales: subjective focus, scientific magnititude and confidence in physical explanation.
 7. I visualize this scoring with a colored scatterplot of all papers together, as well as scatterplots for each in their respective decade.
 
+## [7/19/2026]
+
+I impleted the third variable, confidence in physical explanation, in the Zero-Shot scorer. In scoring, the authors would have to address some level of subjective phenomenology in order to display their confidence in their findings. Therefore, I predicted two things. Higher objectivity scores would have low confidence since they wouldn't be talking about phenomenology at all. And higher subjectivity scores would have lower confidence because they wouldn't be using their findings to explain their subjective implications. Therefore, high confidence scores would likely be found in the center or leaning towards the subjective side.
+
+These were my labels: 
+- labels_3 = [
+    "This text boldly claims that their neurobiological findings are completely sufficient to explain the targeted subjective states and phenomenological experiences.",
+    "This text suggests that physical mechanisms are insufficient to fully explain the subjective phenomena, explicitly or implicitly highlighting a limitation in explanation."
+]
+
+For visualization of this z-axis, I used a custom color map of black to red. I had to use a custom colormap because the confidence values were coming in so incredibly low for the majority of the papers and the only truly "confident" reports ranged between -0.2 and 0.2.
+
+from matplotlib.colors import LinearSegmentedColormap
+
+Here are the photos:
+![Graph](frisson_3_var_display.png)
+![Graph](frisson_3_var_display_80s.png)
+![Graph](frisson_3_var_display_90s.png)
+![Graph](frisson_3_var_display_00s.png)
+![Graph](frisson_3_var_display_10s.png)
+![Graph](frisson_3_var_display_20s.png)
+
+Now, I want to interpret the three types of scoring that the zero-shot transformer was doing. I will implement transformer's built in interpreter to score the words that 
+
+pip install transformers-interpret
+
+from transformers_interpret import ZeroShotClassificationExplainer
+
+I tried to use the ZeroShotClassificationExplainer to analyze the word scoring. However, I ran into several errors such as "AssertionError: Forward hook did not obtain any outputs for given layer". I tried modifying some things, like utilizing AutoModelForSequenceClassification, AutoTokenizer. But, the errors was recurring. Therefore, I decided to switch to using SHAP for analyzing the word scores.
+
+pip install shap 
+
+import shap
+
+ImportError: Numba needs NumPy 2.4 or less. Got NumPy 2.5.
+
+pip install --upgrade numba
+
+Restarted Kernel
+
+I was having serious issues with the way the SHAP was being displayed by display(HTML(shap_html)). So I switched it to switch it to waterfall. But even then it wasn't working. Both shap text and waterfall were encountering errors and took my entire day's worth time of into dead ends. 
+
+I concluded that it was the sheer length of the abstracts that was throwing off these evaluators. Tranformer's interpreter was very faulty from the get-go. And SHAP's graphics couldn't handle the size of the astracts.
+
+So, I decided to stick with SHAP for a little longer and just stop using its visualization. I will try this tomorrow.
+
+
+9th Commit
+
 ## [7/18/2026]
 
 Now that I have about 170 good papers, I want to correctly implement my scoring program before I continue collecting more data. I plan on using Zero-Shot to give me scores for each abstract. There will be 3 scales: subjective focus, micro vs macro, confidence in physical explanation. The first scale displays how much the paper addresses subjective phenomenology in their abstract instead of pure objective statements. The second scale will display whether or not the scientific focus is on large-scale bodily systems, or microscopic, individual parts. The third scale displays how confident the paper is in a physical explanation for the phenomena.
