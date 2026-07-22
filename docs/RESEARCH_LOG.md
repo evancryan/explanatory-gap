@@ -12,6 +12,26 @@ I will use two forms of data extraction. The first method will be based on pheno
 6. Now that the papers have abstracts, are on-topic, on-genre, and historically spread apart, I put each one into the Zero-Shot AI model for scoring based on three scales: subjective focus, scientific magnititude and confidence in physical explanation.
 7. I visualize this scoring with a colored scatterplot of all papers together, as well as scatterplots for each in their respective decade.
 
+## [7/21/2026]
+
+I decided to pivot and instead of going to make my SHAP analysis, I would use this time to organize and create a helpful webplot for myself.
+
+Got rid of the "OPTIONAL - Previewing Zero-Shot's Scoring Mechanism" section from scorer_model.
+
+touch webplot.ipynb
+
+pip install plotly
+
+pip install nbformat
+
+Edited scorer_model so that it would create a scores.csv dataset. This way, I don't have to sit through re-scoring anytime I want to restart my kernel. Furthermore, I can use the dataset for a webplot in a separate area.
+
+Created an interactive scatterplot of my "scores.csv" dataset so that I could see which titles corresponded with which scores on the graph when hovering.
+
+Fixed issue with plot sizing in scorer_model by adding "fig, ax = plt.subplots(figsize=(8,6))"
+
+Re-organized my images and research log into my docs file
+
 ## [7/19/2026]
 
 I impleted the third variable, confidence in physical explanation, in the Zero-Shot scorer. In scoring, the authors would have to address some level of subjective phenomenology in order to display their confidence in their findings. Therefore, I predicted two things. Higher objectivity scores would have low confidence since they wouldn't be talking about phenomenology at all. And higher subjectivity scores would have lower confidence because they wouldn't be using their findings to explain their subjective implications. Therefore, high confidence scores would likely be found in the center or leaning towards the subjective side.
@@ -27,12 +47,12 @@ For visualization of this z-axis, I used a custom color map of black to red. I h
 from matplotlib.colors import LinearSegmentedColormap
 
 Here are the photos:
-![Graph](frisson_3_var_display.png)
-![Graph](frisson_3_var_display_80s.png)
-![Graph](frisson_3_var_display_90s.png)
-![Graph](frisson_3_var_display_00s.png)
-![Graph](frisson_3_var_display_10s.png)
-![Graph](frisson_3_var_display_20s.png)
+![Graph](images/scoring/1/frisson_3_var_display.png)
+![Graph](images/scoring/1/frisson_3_var_display_80s.png)
+![Graph](images/scoring/1/frisson_3_var_display_90s.png)
+![Graph](images/scoring/1/frisson_3_var_display_00s.png)
+![Graph](images/scoring/1/frisson_3_var_display_10s.png)
+![Graph](images/scoring/1/frisson_3_var_display_20s.png)
 
 Now, I want to interpret the three types of scoring that the zero-shot transformer was doing. I will implement transformer's built in interpreter to score the words that 
 
@@ -104,15 +124,15 @@ The machine would give out 4 scores and then I would subtract them from each oth
 
 Therefore, I built a loop to go through each paper and give it the two scores. Each paper's year and scores were added to a list and the list was put into a dataframe. Then, I displayed the results of scoring for all the papers in this graph:
 
-![Graph](frisson_2_var_display.png)
+![Graph](images/scoring/0/frisson_2_var_display.png)
 
 I also displayed the slices of this scatterplot per decade.
 
-![Graph](frisson_2_var_display_80s.png)
-![Graph](frisson_2_var_display_90s.png)
-![Graph](frisson_2_var_display_00s.png)
-![Graph](frisson_2_var_display_10s.png)
-![Graph](frisson_2_var_display_20s.png)
+![Graph](images/scoring/0/frisson_2_var_display_80s.png)
+![Graph](images/scoring/0/frisson_2_var_display_90s.png)
+![Graph](images/scoring/0/frisson_2_var_display_00s.png)
+![Graph](images/scoring/0/frisson_2_var_display_10s.png)
+![Graph](images/scoring/0/frisson_2_var_display_20s.png)
 
 
 Now, obviously this selection of 174 papers only on musical frisson is short-sighted compared to what I will do later in this project when expanding the search. However, these results represent a good demonstration of the pipeline I will conduct. I added this to the methodology at the top of this log.
@@ -140,7 +160,7 @@ I ran the safely modified, simple subjective search and got back these:
 - Conscious: 6 -> 8
 
 I created a graph to showcase the yearly tracking of the 174 papers. I successfully mapped out a complete progress from the 80s to the 2020s. In the extraction right before this, I had only two papers from 96/97. Now, I have 20 papers from the 1980s alone. This is a major success and can be seen here:
-![Graph](m_1_1_good_extraction.png)
+![Graph](images/extraction/m_1_1_good_extraction.png)
 
 However, I realized that in the four hours I let the program request abstracts from PubMed, I forgot to ask for the authors as well. So, I went to the section where I collected all the essential information before putting it in a dataframe. There, I added a couple fallbacks to search the massive list of papers missing abstracts for a list of authors based on the title.
 
@@ -182,12 +202,12 @@ I started by doing a very simple search to see if a couple subjective words are 
 - Conscious: 5
 
 Then, I cleaned up the data from the filtered list of papers and put it into a dataframe. After doing so, I decided to visualize this data based on which articles come from which year. After all, my project depends upon proper historicity. To my dismay, I saw that the 65 papers were mostly incredibly recent. Here was the graph I saw:
-![Graph](m_1_1_weak_extraction.png)
+![Graph](images/extraction/m_1_1_weak_extraction.png)
 
 Because of this, I decided to revisit my Semantic Scholar scraping. I implemented a list of year periods so that I can gather back specific papers per specific era. This significantly increased the amount of time to scrape from around 2 minutes to around 30 minutes. Throughout these 30 minutes, Semantic Scholar was prone to crash. (This unfortunately happened to me once right as the scraping reached the very end of the 2020-2026 era). Therefore, I incorporated a try and except catch. Furthermore, I put in a while loop so that if a crash occurs, the program doesn't just skip to the next era. For this first attempt, it took around 50 minutes to complete and gathered 39,133 unique papers in the end.
 
 Unfortunately, after this first attempt, the filtering process found that 30,000 of these papers didn't have abstracts. This was a serious blunder. Out of the 9000 papers that were searched for both on topic and neuroscience terms, only 102 total papers met the criteria. Here was the resulting graph and the subjective terms preview:
-![Graph](m_1_1_weak_extraction_2.png)
+![Graph](images/extraction/m_1_1_weak_extraction_2.png)
 
 - Explantory Gap: 0
 - Subjective: 21
